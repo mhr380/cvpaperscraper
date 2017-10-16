@@ -58,7 +58,7 @@ with open(save_html_name, 'w') as f:
         if pdf_folder_url in link_url:
 
             paper_title = paper_titles[paper_id].a.string
-            print('downloading {}'.format(paper_title)
+            print('downloading {}'.format(paper_title))
 
             if search_from_arxiv:
                 pdf_url = arxiv.search_from_title(paper_title)
