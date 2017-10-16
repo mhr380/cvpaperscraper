@@ -4,3 +4,4 @@
 .vscode/
 /iccv2017/
 *.pyc
+.DS_Store
