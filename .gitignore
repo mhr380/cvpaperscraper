@@ -1,0 +1,6 @@
+*.html
+*.htm
+/pdfs/
+.vscode/
+/iccv2017/
+*.pyc
