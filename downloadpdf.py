@@ -10,25 +10,37 @@ from bs4 import BeautifulSoup
 
 import arxivsearch as arxiv
 
+#
+# turn True this flag to get paper from ArXiv
+#
+search_from_arxiv = True 
 
-search_from_arxiv = True
-
+#
+# information of ICCV open access page
+#
 base_url        = 'http://openaccess.thecvf.com/'
 html_url        = 'ICCV2017.py'
 pdf_folder_url  = 'content_ICCV_2017/papers/'
-conference_name = 'ICCV2017'
-pdf_local_folder_name = 'iccv2017/'
-save_html_name = 'iccv2017.html'
 
 
+save_html_name = 'iccv2017.html' # index page
+conference_name = 'ICCV2017' # use as html header.
+pdf_local_folder_name = 'iccv2017/' # local directory for storing pdfs
+
+
+#
+# make directory for storing pdfs if it does not exist
+#
 if not os.path.exists(pdf_local_folder_name):
     os.makedirs(pdf_local_folder_name)
 
 
+#
+# parsing openaccess page to obtain paper titles using BeautifulSoup4
+#
 req = urllib.request.Request(base_url + html_url)
 html = urllib.request.urlopen(req)
 soup = BeautifulSoup(html, 'html.parser')
-
 
 paper_infos = soup.find('dl')
 paper_titles = paper_infos.find_all('dt', attrs={'class': 'ptitle'})
@@ -46,7 +58,7 @@ with open(save_html_name, 'w') as f:
         if pdf_folder_url in link_url:
 
             paper_title = paper_titles[paper_id].a.string
-            print(str(n) + ': downloading ' + paper_title)
+            print('downloading {}'.format(paper_title)
 
             if search_from_arxiv:
                 pdf_url = arxiv.search_from_title(paper_title)
@@ -55,7 +67,6 @@ with open(save_html_name, 'w') as f:
 
 
             http_status_code = urllib.request.urlopen(pdf_url).getcode() # 200 is OK. Other numbers (such as 404) are NG
-
 
             if http_status_code is 200: # if remote url exists
                 save_name = os.path.join(pdf_local_folder_name, str(paper_id) + u'.pdf')
