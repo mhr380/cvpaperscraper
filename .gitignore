@@ -2,6 +2,7 @@
 *.htm
 /pdfs/
 .vscode/
-/iccv2017/
+/cvpr2019/
 *.pyc
 .DS_Store
+/__pycache__/
